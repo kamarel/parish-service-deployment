@@ -1,5 +1,8 @@
 package com.parishservice.parishservice.Service;
 
+import com.google.common.net.HttpHeaders;
+import com.parishservice.parishservice.Dto.ApiResponseDto;
+import com.parishservice.parishservice.Dto.MembersDto;
 import com.parishservice.parishservice.Entity.Parish;
 import com.parishservice.parishservice.Repository.ParishRepository;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,9 @@ public class ParishServiceImp implements ParishService{
 
     @Autowired
     private ParishRepository parishRepository;
+
+    @Autowired
+    private WebClient webClient;
 
     @Override
     public Parish saveParish(Parish parish) {
@@ -67,5 +73,21 @@ public class ParishServiceImp implements ParishService{
     @Override
     public Parish getParishById(Long id) {
         return parishRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public ApiResponseDto getAllMembers(String token) {
+        Mono<List<MembersDto>> listMono = webClient.get()
+                .uri("https://distinguished-education-production.up.railway.app/api/v1/members")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .retrieve()
+                .bodyToFlux(MembersDto.class)
+                .collectList();
+
+        List<MembersDto> membersDtoList = listMono.block();
+
+        ApiResponseDto apiResponseDto = new ApiResponseDto();
+        apiResponseDto.setMembersDtoList(membersDtoList);
+        return apiResponseDto;
     }
 }

@@ -1,6 +1,7 @@
 package com.parishservice.parishservice.Service;
 
 
+import com.parishservice.parishservice.Dto.ApiResponseDto;
 import com.parishservice.parishservice.Entity.Parish;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ParishService {
     void deleteParishById(Long id);
 
     Parish getParishById(Long id);
+
+    ApiResponseDto getAllMembers(String token);
 }
