@@ -20,5 +20,5 @@ public interface ParishService {
 
     Parish getParishById(Long id);
 
-    ApiResponseDto getAllMembers(String token);
+
 }

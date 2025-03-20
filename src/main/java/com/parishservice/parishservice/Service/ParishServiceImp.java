@@ -75,19 +75,5 @@ public class ParishServiceImp implements ParishService{
         return parishRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public ApiResponseDto getAllMembers(String token) {
-        Mono<List<MembersDto>> listMono = webClient.get()
-                .uri("https://distinguished-education-production.up.railway.app/api/v1/members")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                .retrieve()
-                .bodyToFlux(MembersDto.class)
-                .collectList();
 
-        List<MembersDto> membersDtoList = listMono.block();
-
-        ApiResponseDto apiResponseDto = new ApiResponseDto();
-        apiResponseDto.setMembersDtoList(membersDtoList);
-        return apiResponseDto;
-    }
 }

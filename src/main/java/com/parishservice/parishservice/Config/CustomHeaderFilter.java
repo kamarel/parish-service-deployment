@@ -1,4 +1,3 @@
-/*
 package com.parishservice.parishservice.Config;
 
 import jakarta.servlet.*;
@@ -44,4 +43,3 @@ public class CustomHeaderFilter implements jakarta.servlet.Filter {
         // No need to call super.destroy();
     }
 }
-*/
